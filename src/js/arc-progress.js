@@ -6,64 +6,105 @@
 
 var ArcProgress = function(obj) {
 
+	var self = this;
+	var obj = d3.select(obj);
+
+	var pi = Math.PI;
+	var t = 2 * Math.PI;
+
+	var duration = 750;
+
+	var diameter = 100,
+		thickness = 10,
+		percentage = 0;
+
+
+	var svg, track, prog, arcProg, arcTrack;
+
+	this.setDiameter = function(_diameter) {
+		diameter = _diameter;
+		return self;
+	}
+
+	this.setThickness = function(_thickness) {
+		thickness = _thickness;
+		return self;
+	}
+
+	this.setPercentage = function(_percentage) {
+		percentage = _percentage;
+
+		// percentage to deg
+		var deg = 360 * (percentage/100);
+		console.log(deg);
+		// deg to radians
+		var rad = (deg * (pi/180));
+		console.log(rad);
+		prog.transition()
+        	.duration(duration)
+        	.call(_arcTween, rad);
+
+		return self;
+	}
+
+	this.render = function() {
+
+		svg = obj.append('svg')
+				 .attr('class','arc-prog-svg')
+			     .attr('width', diameter)
+			     .attr('height', diameter);
+        
+		arcTrack = d3.svg.arc()
+		   	 	     .outerRadius(diameter/2)
+		     	     .innerRadius(diameter/2 - thickness)
+		     	     .startAngle(0)
+		     	     .endAngle(360 * (pi/180));
+
+		arcProg = d3.svg.arc()
+					.outerRadius(diameter/2)
+			    	.innerRadius(diameter/2 - thickness)
+			    	.startAngle(0);	
+
+        // Background RECT
+        /*
+        var bg = svg.append('g')
+        			.attr('class', 'component')
+                	.attr('cursor', 'pointer');
+
+		bg.append('rect')
+		  .attr('class','background')
+          .attr('width', diameter)
+          .attr('height', diameter);
+		*/
+
+		track = svg.append('path')
+          		   .attr('fill', 'lightgrey')
+          		   .attr('class', 'arc-prog-track')
+          		   .attr('d', arcTrack)
+          		   .attr('transform', 'translate(' + (diameter / 2) + ', ' + (diameter/2) + ')');
+
+        prog = svg.append('path')
+				  .datum({endAngle: 0})
+                  .attr("fill", "orange")
+                  .attr('class', 'arc-prog-path')
+                  .attr('d', arcProg)
+           		  .attr('transform', 'translate(' + (diameter / 2) + ', ' + (diameter/2) + ')');
+
+		return self;
+	}
+
+
+	var _arcTween = function(transition, newAngle) {
+
+		transition.attrTween("d", function(d) {
+			var interpolate = d3.interpolate(d.endAngle, newAngle);
+			return function(t) {
+				d.endAngle = interpolate(t);
+				/* console.log(Math.round(((d.endAngle/ (pi/180)) / 360)*100) + '%'); */
 	
+				return arcProg(d);
+			};
+		});
 
+	}
 }
-
-/*
-var vis = d3.select(".radial").append("svg")
-var pi = Math.PI;
-var t = 2 * Math.PI;
-
-var width = 200,
-		height = 200,
-		thickness = 10;
- 
-var arc = d3.svg.arc()
-    .outerRadius(200/2)
-    .innerRadius(200/2 - thickness)
-    //.startAngle(90 * (pi/180)) //converting from degs to radians
-    .startAngle(0)
-    //.endAngle(0 * (pi/180)) //just radians
-    
-var arc2 = d3.svg.arc()
-		.outerRadius(200/2)
-    .innerRadius(200/2 - thickness)
-    .startAngle(0)
-    .endAngle(360 * (pi/180)) //just radians
-    
-vis.attr("width", width).attr("height", height);
-
-var base = vis.append("path")
-							.attr('d', arc2)
-              .attr('fill', 'lightgrey')
-              .attr("transform", "translate("+(width/2)+","+(height/2)+")");
-
-var path = vis.append("path")
-							.datum({endAngle: 0})
-    					.attr("d", arc)
-              .attr("fill", "orange")
-              .attr("transform", "translate("+(width/2)+","+(height/2)+")");
-
-function arcTween(transition, newAngle) {
-
-	transition.attrTween("d", function(d) {
-    var interpolate = d3.interpolate(d.endAngle, newAngle);
-    return function(t) {
-      d.endAngle = interpolate(t);
-      console.log(Math.round(((d.endAngle/ (pi/180)) / 360)*100) + '%');
-      
-      return arc(d);
-    };
-  });
-
-}
-
-setInterval(function() {
-  path.transition()
-      .duration(750)
-      .call(arcTween, Math.random() * t);
-}, 1500);
-
-
-*/
