@@ -34,12 +34,9 @@ var ArcProgress = function(obj) {
 	this.setPercentage = function(_percentage) {
 		percentage = _percentage;
 
-		// percentage to deg
 		var deg = 360 * (percentage/100);
-		console.log(deg);
-		// deg to radians
 		var rad = (deg * (pi/180));
-		console.log(rad);
+		
 		prog.transition()
         	.duration(duration)
         	.call(_arcTween, rad);
