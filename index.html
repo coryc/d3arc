@@ -12,7 +12,9 @@
 	
 	<h1>Arc Progress</h1>
 
-	<div id="arc1"></div>
+	<div id="arc1">
+		<div id="arc1-label" class="percent-label"></div>
+	</div>
 
 
 
@@ -21,6 +23,7 @@
 		var arc1 = new ArcProgress(document.getElementById('arc1'))
 							.setDiameter(200)
 							.setThickness(20)
+							.setLabel(document.getElementById('arc1-label'))
 							.render();
 
 		arc1.onPercentUpdated(function(percent){

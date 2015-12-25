@@ -20,6 +20,7 @@ var ArcProgress = function(obj) {
 
 	var svg, track, prog, arcProg, arcTrack;
 
+	var label;
 
 	var _onPercentUpdated;
 
@@ -31,6 +32,11 @@ var ArcProgress = function(obj) {
 
 	this.setThickness = function(_thickness) {
 		thickness = _thickness;
+		return self;
+	}
+
+	this.setLabel = function(_label){
+		label = _label;
 		return self;
 	}
 
@@ -57,6 +63,7 @@ var ArcProgress = function(obj) {
 
         return self;
 	}
+
 
 
 	this.render = function() {
@@ -95,6 +102,16 @@ var ArcProgress = function(obj) {
 	}
 
 
+	this._percentUpdated = function(percent){
+		if (typeof _onPercentUpdated == "function") {
+            _onPercentUpdated.apply(self, [percent]);
+        }
+
+        if (label != null) {
+        	label.innerHTML = Math.round(percent) + '%';
+        }
+	}
+
 	var _arcTween = function(transition, newAngle) {
 
 		transition.attrTween("d", function(d) {
@@ -104,9 +121,7 @@ var ArcProgress = function(obj) {
 
 				var percent = (((d.endAngle/ (pi/180)) / 360)*100);
 
-				if (typeof _onPercentUpdated == "function") {
-	                _onPercentUpdated.apply(self, [percent]);
-	            }
+				self._percentUpdated(percent);
 
 				return arcProg(d);
 			};
