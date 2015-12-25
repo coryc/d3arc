@@ -1,0 +1,10 @@
+
+.arc-svg{}
+
+.arc-svg .arc-track{
+	fill: lightgrey;
+}
+
+.arc-svg .arc-prog{
+ 	fill: orange;
+}

@@ -62,7 +62,7 @@ var ArcProgress = function(obj) {
 	this.render = function() {
 
 		svg = obj.append('svg')
-				 .attr('class','arc-prog-svg')
+				 .attr('class','arc-svg')
 			     .attr('width', diameter)
 			     .attr('height', diameter);
         
@@ -80,14 +80,14 @@ var ArcProgress = function(obj) {
 
 		track = svg.append('path')
           		   .attr('fill', 'lightgrey')
-          		   .attr('class', 'arc-prog-track')
+          		   .attr('class', 'arc-track')
           		   .attr('d', arcTrack)
           		   .attr('transform', 'translate(' + (diameter / 2) + ', ' + (diameter/2) + ')');
 
         prog = svg.append('path')
 				  .datum({endAngle: 0})
-                  .attr("fill", "orange")
-                  .attr('class', 'arc-prog-path')
+                  .attr("fill", "black")
+                  .attr('class', 'arc-prog')
                   .attr('d', arcProg)
            		  .attr('transform', 'translate(' + (diameter / 2) + ', ' + (diameter/2) + ')');
 
