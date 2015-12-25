@@ -11,19 +11,84 @@
 <body>
 	
 	<h1>Arc Progress</h1>
+	
+	<div class="col">
+	
+		<h2>Percentage based</h2>
 
-	<div id="arc1">
-		<div id="arc1-label" class="percent-label"></div>
+		<div id="arc1" class="arc">
+			<div id="arc1-label" class="arc-label"></div>
+		</div>
+	</div>
+
+	<div class="col">
+	
+		<h2>Range based. 0-50</h2>
+
+		<div id="arc2" class="arc">
+			<div id="arc2-label" class="arc-label"></div>
+		</div>
+	</div>
+
+	<div class="col">	
+	
+		<h2>Range + Percentage Based</h2>
+
+		<div id="arc3" class="arc">
+			<div class="arc-mixed">
+				<div id="arc3-percent"></div>
+				<div id="arc3-score">Score: <span id="arc3-score-value"></span></div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col">
+	
+		<h2>Colour Scheme</h2>
+
+		<div id="arc4" class="arc">
+			<div id="arc4-label" class="arc-label"></div>
+		</div>
+
 	</div>
 
 	<script type="text/javascript">
-
+		// Percentage based bar
 		var arc1 = new ArcProgress(document.getElementById('arc1'))
 							.setDiameter(200)
 							.setThickness(20)
-							.setLabel(document.getElementById('arc1-label'))
+							.setPercentLabel(document.getElementById('arc1-label'))
 							.render();
-		
+		arc1.setPercentage(80);		
+
+      	// Range of values
+      	var arc2 = new ArcProgress(document.getElementById('arc2'))
+							.setDiameter(200)
+							.setThickness(20)
+							.setRange(0, 50)
+							.setValueLabel(document.getElementById('arc2-label'))
+							.render();
+		arc2.setValue(15);
+
+
+		// Range of values showing percentage
+      	var arc3 = new ArcProgress(document.getElementById('arc3'))
+							.setDiameter(200)
+							.setThickness(20)
+							.setRange(0, 50)
+							.setPercentLabel(document.getElementById('arc3-percent'))
+							.setValueLabel(document.getElementById('arc3-score-value'))
+							.render();
+		arc3.setValue(35);
+
+		// Colour Schems
+		var arc4 = new ArcProgress(document.getElementById('arc4'))
+							.setDiameter(200)
+							.setThickness(20)
+							.setPercentLabel(document.getElementById('arc4-label'))
+							.render();
+		arc4.setPercentage(75);		
+
 	</script>
 
 </body>
