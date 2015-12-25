@@ -120,6 +120,17 @@ var ArcProgress = function(obj) {
 			    	.innerRadius(diameter/2 - thickness)
 			    	.startAngle(0);	
 
+		var arcInnerBg = d3.svg.arc()
+		   	 	           .outerRadius(diameter/2 - thickness)
+		     	           .innerRadius(0)
+		     	           .startAngle(0)
+		     	           .endAngle(360 * (pi/180));				    	
+
+		var innerBg = svg.append('path')
+						 .attr('fill', 'none')
+	          		     .attr('class', 'arc-inner-bg')
+	          		     .attr('d', arcInnerBg)
+	          		     .attr('transform', 'translate(' + (diameter / 2) + ', ' + (diameter/2) + ')');
 
 		track = svg.append('path')
           		   .attr('fill', 'lightgrey')

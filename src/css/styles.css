@@ -49,3 +49,8 @@ body{
 #arc1 .arc-prog{ fill: orange;}
 #arc2 .arc-prog{ fill: #3fb0ac;}
 #arc3 .arc-prog{ fill: #e62739;}
+
+#arc4 { color: #dddfd4;}
+#arc4 .arc-track{ fill: #fae596; }
+#arc4 .arc-prog{ fill: #173e43; }
+#arc4 .arc-inner-bg{ fill: #3fb0ac; }
