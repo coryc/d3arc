@@ -21,6 +21,7 @@ var ArcProgress = function(obj) {
 
 	var svg, track, prog, arcProg, arcTrack;
 
+
 	this.setDiameter = function(_diameter) {
 		diameter = _diameter;
 		return self;
@@ -43,6 +44,7 @@ var ArcProgress = function(obj) {
 
 		return self;
 	}
+
 
 	this.render = function() {
 
@@ -97,8 +99,9 @@ var ArcProgress = function(obj) {
 			var interpolate = d3.interpolate(d.endAngle, newAngle);
 			return function(t) {
 				d.endAngle = interpolate(t);
+
 				/* console.log(Math.round(((d.endAngle/ (pi/180)) / 360)*100) + '%'); */
-	
+				
 				return arcProg(d);
 			};
 		});
