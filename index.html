@@ -16,8 +16,6 @@
 		<div id="arc1-label" class="percent-label"></div>
 	</div>
 
-
-
 	<script type="text/javascript">
 
 		var arc1 = new ArcProgress(document.getElementById('arc1'))
@@ -25,11 +23,7 @@
 							.setThickness(20)
 							.setLabel(document.getElementById('arc1-label'))
 							.render();
-
-		arc1.onPercentUpdated(function(percent){
-			console.log('onPercentChange: ', percent);
-		});				
-
+		
 	</script>
 
 </body>
