@@ -10,7 +10,6 @@ var ArcProgress = function(obj) {
 	var obj = d3.select(obj);
 
 	var pi = Math.PI;
-	var t = 2 * Math.PI;
 
 	var duration = 750;
 
@@ -20,6 +19,10 @@ var ArcProgress = function(obj) {
 
 
 	var svg, track, prog, arcProg, arcTrack;
+
+
+	var _onPercentUpdated;
+
 
 	this.setDiameter = function(_diameter) {
 		diameter = _diameter;
@@ -32,7 +35,11 @@ var ArcProgress = function(obj) {
 	}
 
 	this.setPercentage = function(_percentage) {
+		if (percentage == _percentage) return self;
+
 		percentage = _percentage;
+
+		if (percentage > 100) percentage == 100;
 
 		var deg = 360 * (percentage/100);
 		var rad = (deg * (pi/180));
@@ -44,10 +51,18 @@ var ArcProgress = function(obj) {
 		return self;
 	}
 
+	this.onPercentUpdated = function(cb){
+		if (arguments.length == 1)
+        	_onPercentUpdated = cb;
+
+        return self;
+	}
+
+
 	this.render = function() {
 
 		svg = obj.append('svg')
-				 .attr('class','arc-prog-svg')
+				 .attr('class','arc-svg')
 			     .attr('width', diameter)
 			     .attr('height', diameter);
         
@@ -62,28 +77,17 @@ var ArcProgress = function(obj) {
 			    	.innerRadius(diameter/2 - thickness)
 			    	.startAngle(0);	
 
-        // Background RECT
-        /*
-        var bg = svg.append('g')
-        			.attr('class', 'component')
-                	.attr('cursor', 'pointer');
-
-		bg.append('rect')
-		  .attr('class','background')
-          .attr('width', diameter)
-          .attr('height', diameter);
-		*/
 
 		track = svg.append('path')
           		   .attr('fill', 'lightgrey')
-          		   .attr('class', 'arc-prog-track')
+          		   .attr('class', 'arc-track')
           		   .attr('d', arcTrack)
           		   .attr('transform', 'translate(' + (diameter / 2) + ', ' + (diameter/2) + ')');
 
         prog = svg.append('path')
 				  .datum({endAngle: 0})
-                  .attr("fill", "orange")
-                  .attr('class', 'arc-prog-path')
+                  .attr("fill", "black")
+                  .attr('class', 'arc-prog')
                   .attr('d', arcProg)
            		  .attr('transform', 'translate(' + (diameter / 2) + ', ' + (diameter/2) + ')');
 
@@ -97,8 +101,13 @@ var ArcProgress = function(obj) {
 			var interpolate = d3.interpolate(d.endAngle, newAngle);
 			return function(t) {
 				d.endAngle = interpolate(t);
-				/* console.log(Math.round(((d.endAngle/ (pi/180)) / 360)*100) + '%'); */
-	
+
+				var percent = (((d.endAngle/ (pi/180)) / 360)*100);
+
+				if (typeof _onPercentUpdated == "function") {
+	                _onPercentUpdated.apply(self, [percent]);
+	            }
+
 				return arcProg(d);
 			};
 		});
