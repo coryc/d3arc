@@ -4,13 +4,24 @@ body{
 }
 
 
-#arc1 {
+.col {
+	float: left;
+    margin-left: 60px;
+}
+
+.col h2 {
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.arc {
 	position: relative;
     height: 200px;
     width: 200px;
 }
 
-#arc1-label{
+.arc-label{
 	position: absolute;
     font-size: 29px;
     text-align: center;
@@ -21,3 +32,20 @@ body{
     left: 50%;
     margin-left: -40px;
 }
+
+
+.arc .arc-mixed{
+	position: absolute;
+    font-size: 26px;
+    text-align: center;
+    line-height: 26px;
+    top: 50%;
+    margin-top: -27px;
+    width: 128px;
+    left: 50%;
+    margin-left: -64px;
+}
+
+#arc1 .arc-prog{ fill: orange;}
+#arc2 .arc-prog{ fill: #3fb0ac;}
+#arc3 .arc-prog{ fill: #e62739;}
