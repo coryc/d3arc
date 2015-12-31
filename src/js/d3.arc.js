@@ -1,6 +1,7 @@
 /**
  * Arc Progress v0.1
- * @author Cory Caines <cory@kreatednine.com> 
+ * @author Cory Caines <cory@kreatednine.com>
+ * @url https://github.com/coryc/d3arc
  */
 
 
